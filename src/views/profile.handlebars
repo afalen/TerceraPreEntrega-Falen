@@ -1,0 +1,44 @@
+
+    {{#if isAdmin}}
+        <p class="container h3 text-center bg-info"> Bienvenido  Administrador Coder </p>
+        
+        <div class="container mt-1 pt-1 pb-1 d-flex justify-content-evenly align-items-center gap-2 bg-success">
+            <p>Email: {{this.email}}</p>
+            <p>Rol: {{this.role}}</p>
+            <a href="/logout"> <button class="btn btn-primary"> LogOut </button></a>
+        </div>
+
+        <div class="container mt-3 bg-warning">
+            {{#each docs}}
+            <div>
+                <p>Nombre: {{this.nombre}} &nbsp; Precio: {{this.precio}}</p>
+                <p>Categoria: {{this.categoria}} &nbsp; Stock: {{this.stock}}</p>
+            </div>
+            <br />
+            {{/each}}
+        </div>
+
+
+
+    {{else}}
+    <p class="container h3 text-center bg-info">Bienvenido {{this.first_name}} {{this.last_name}}</p>
+    <div class="container mt-1 d-flex justify-content-evenly align-items-center gap-2 bg-success">
+
+        <p> <strong> Email: </strong> {{this.email}} </p>
+        <p> <strong> Edad: </strong> {{this.age}} </p>
+        <p> <strong> Rol: </strong> {{this.role}}</p>
+        <p> <strong> Id_Cart: </strong> {{this.cart}}</p>
+
+        <a href="/logout"> <button class="btn btn-primary"> LogOut </button></a>
+    </div>
+
+        <div class="container mt-3 bg-warning">
+            {{#each docs}}
+            <div>
+                <p>Nombre: {{this.nombre}} &nbsp; Precio: {{this.precio}}</p>
+                <p>Categoria: {{this.categoria}} &nbsp; Stock: {{this.stock}}</p>
+            </div>
+            <br />
+            {{/each}}
+        </div>
+    {{/if}}

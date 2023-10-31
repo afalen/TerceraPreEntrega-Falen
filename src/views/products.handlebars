@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+{{#if isValid}}
+<div>
+    <p class="container h3 text-center bg-info"> Lista de productos </p>
+    {{#each docs}}
+    <div class="container mt-3 d-flex flex-column align-items-center bg-warning">
+        <p>Nombre: {{this.nombre}} &nbsp; Precio: {{this.precio}}</p>
+        <p>Categoria: {{this.categoria}} &nbsp; Stock: {{this.stock}}</p>
+        <button onclick="addToCart('{{this._id}}')" class="btn btn-primary">Agregar al carrito</button>
+    </div>
+    <br />
+    {{/each}}
+</div>
+<br />
+<nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+        {{#if hasPrevPage}}
+        <li class="page-item"> <a class="page-link" href={{this.prevLink}}> 
+            Anterior</a> </li>
+        {{/if}}
+        &nbsp;
+        <li class="page-item">   
+            <a class="page-link"> {{this.page}} </a> 
+        </li> 
+        &nbsp;
+        {{#if hasNextPage}}
+        <li class="page-item">
+            <a class="page-link" href={{this.nextLink}}>Siguiente</a>
+        </li>
+        {{/if}}
+    </ul>
+</nav>
+{{else}}
+<h1>No hay productos para mostrar</h1>
+{{/if}}
+
+
+    <script src="/js/products.js"></script>
+</body>
+</html>
