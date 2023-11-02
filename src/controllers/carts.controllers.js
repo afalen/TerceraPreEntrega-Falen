@@ -1,4 +1,7 @@
 import { CartsService } from "../services/carts.services.js";
+import { sendEmailController } from "./emails.controllers.js";
+import { CustomError } from "../services/error/customError.services.js";
+import { EError } from "../enums/EError.js";
 
 export class CartsController {
     static createCart = async(req, res)=>{
@@ -13,6 +16,14 @@ export class CartsController {
     static getCartById = async(req, res)=>{
         try{
             const {cid} = req.params
+            if (!cid || cid.trim() === "") {
+                CustomError.createError({
+                    name: "Error id carrito",
+                    cause: generateCartErrorParams(id),
+                    message: "Error al obtener el carrito",
+                    errorCode: EError.INVALID_PARAMS,
+                });
+            }
             let resultado = await CartsService.getCartById(cid)
             res.send({result: 'success', payload: resultado})
         }catch(error){
@@ -33,8 +44,9 @@ export class CartsController {
     static deleteProductInCart = async(req, res)=>{
         try{
             const {cid, pid} = req.params
-            let resultado = await CartsService.deleteProductInCart(cid, pid)
-            res.send({result: 'success', payload: resultado}) 
+            await CartsService.deleteProductInCart(cid, pid)
+            res.redirect(`/carts/${cid}`)
+            //res.send({result: 'success', payload: resultado}) 
         }catch(error){
             throw new Error(`Error al eliminar los productos del carrito ${error.message}`);
         }
@@ -71,4 +83,21 @@ export class CartsController {
             throw new Error(`Error al eliminar los productos del carrito ${error.message}`);
         }
     }
+
+    static purchase = async (req, res) => {
+		try {
+			const { cid } = req.params;
+            const { email } = req.session.user
+            //console.log(req.session)
+            const result = await CartsService.purchase(cid, email);
+            //console.log(result)
+            await CartsService.deleteProductsInCart(cid)
+			await sendEmailController(email, result)
+            //res.json({ status: "success", data: cartPurchase });
+            res.redirect('/profile')
+		} catch (error) {
+			res.json({ status: "error", message: error.message });
+		}
+	};
+
 }

@@ -1,4 +1,3 @@
-import mongoose from "mongoose";
 import { config } from "../config/config.js";
 
 let productsDao;
@@ -8,7 +7,8 @@ let usersDao;
 switch (config.persistence) {
     case "MONGO":
         //conexion a base de datos
-        const connection = mongoose.connect(config.mongoUrl)
+        const { connectDB } = await import("../config/dbConnetion.js") 
+        connectDB()
 
         const {Cart} = await import("./mongo/carts.mongo.js");
         const {Product} = await import("./mongo/products.mongo.js");

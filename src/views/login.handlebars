@@ -1,20 +1,25 @@
-<div class="container d-flex flex-column justify-content-between align-items-center gap-2">
+<div class="card text-center d-flex flex-column justify-content-between align-items-center gap-2">
+    <div class="card-body text-center d-flex flex-column justify-content-between align-items-center gap-3">
+        <div class="form-group">
 
-    <form action="/api/sessions/login" method="post" class="d-flex flex-column gap-1">
-        <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Password</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+            <form action="/api/sessions/login" method="post" class="d-flex flex-column gap-1">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="btn btn-primary btn-lg btn-block mt-3">Login</button>
+            </form>
+        </div>
 
 
-    <div>
-        <a href="/register"> <button class="btn btn-primary"> Registrarse </button> </a>
-    </div>
+        <div class="form-group">
+                <a href="/register"> <button class="btn btn-primary btn-lg btn-block px-5"> Registrarse </button> </a>
+        </div>
 
-    <div>
-        <a href="/api/sessions/github"> <button class="btn btn-primary"> Entrar con github </button> </a>
+        <div class="form-group">
+            <a href="/api/sessions/github"> <button class="btn btn-primary btn-lg px-3"> Entrar con github </button> </a>
+        </div>
+
     </div>
 
 </div>

@@ -28,6 +28,10 @@ export class CartsService {
     static async deleteProductsInCart(id){
         return cartsDao.deleteProductsInCart(id);
     }
+
+	static async purchase(cid, email) {
+		return cartsDao.purchase(cid, email);
+	}    
 }
 
 

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { ProductsController } from '../controllers/products.controllers.js';
+import { checkRoles, checkUserAuthenticatedView  } from '../middlewares/auth.js';
 
 const router = Router()
 
@@ -10,12 +11,12 @@ router.get('/', ProductsController.getProducts)
 router.get('/:pid', ProductsController.getProductsById);
 
 // Ruta para agregar un nuevo producto
-router.post('/', ProductsController.addProduct)
+router.post('/', checkUserAuthenticatedView, checkRoles(['admin']), ProductsController.addProduct)
 
 // Ruta para modificar/actualizar un producto por su ID
-router.put('/:uid', ProductsController.modifyProduct)
+router.put('/:uid', checkUserAuthenticatedView, checkRoles(['admin']), ProductsController.modifyProduct)
 
 // Ruta para eliminar un producto por su ID
-router.delete('/:uid', ProductsController.deleteProduct)
+router.delete('/:uid', checkUserAuthenticatedView, checkRoles(['admin']), ProductsController.deleteProduct)
 
 export { router as productsRouter }

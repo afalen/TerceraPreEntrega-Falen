@@ -1,4 +1,7 @@
 import { ProductsService } from '../services/products.services.js'
+import { EError } from '../enums/EError.js'
+import { CustomError } from '../services/error/customError.services.js'
+import { generateProductError } from '../services/error/productError.services.js'
 
 export class ProductsController {
 
@@ -28,12 +31,18 @@ export class ProductsController {
     static addProduct = async(req, res)=>{
         try{
             let newProduct = req.body;
-            if(!newProduct){
-                res.send({status: "error", error: "Error en los parametros del producto"})
+            if (!newProduct) {
+                CustomError.createError({
+                    name: "Error al crear el producto",
+                    cause: generateProductError(req.body),
+                    message: "Hubo un error al agregar un producto",
+                    errorCode: EError.INVALID_JSON,
+                });
             }
         
-            let result = await ProductsService.addProduct(newProduct)
-            res.send({result: "success", payload: result})
+            await ProductsService.addProduct(newProduct)
+            res.redirect("/profile")
+            //res.send({result: "success", payload: result})
         }catch(error){
             throw new Error(`Error al agregar el producto ${error.message}`);
         }
@@ -42,13 +51,14 @@ export class ProductsController {
     static modifyProduct = async(req, res)=>{
         try{
             let {uid} = req.params
-            let productToReplace = req.body
-            if(!productToReplace.nombre || !productToReplace.categoria || !productToReplace.precio || !productToReplace.stock || !productToReplace.imagen){
+            let {nombre, categoria, precio, stock, imagen} = req.body
+            if(!nombre || !categoria || !precio || !stock || !imagen){
                 res.send({status:'error', error:'Faltan parámetros'})
             }
         
-            let result = await ProductsService.modifyProduct(uid, productToReplace)
-            res.send({result: 'success', payload: result})
+            await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen})
+            res.redirect("/profile")
+           // res.send({result: 'success', payload: result})
         }catch(error){
             throw new Error(`Error al modificar el producto ${error.message}`);
         }
@@ -57,8 +67,9 @@ export class ProductsController {
     static deleteProduct = async(req, res)=>{
         try{
             let {uid} = req.params
-            let result = await ProductsService.deleteProduct(uid)
-            res.send({result: "success", payload: result})
+            await ProductsService.deleteProduct(uid)
+            res.redirect("/profile")
+           // res.send({result: "success", payload: result})
         }catch(error){
             throw new Error(`Error al eliminar el producto ${error.message}`);
         }

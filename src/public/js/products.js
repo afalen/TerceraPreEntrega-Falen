@@ -1,4 +1,4 @@
-const newCart = async () => {
+/* const newCart = async () => {
 	try {
 		if (!cartId) {
 			const resp = await fetch(`http://localhost:8080/api/carts/`, {
@@ -11,14 +11,14 @@ const newCart = async () => {
 			cartDiv.innerHTML = cartId;
 
 			const cartLink = document.getElementById("cartLink");
-			cartLink.href = `http://localhost:8080/api/carts/${cartId}`;
+			cartLink.href = `http://localhost:8080/carts/${cartId}`;
 		} else {
 			console.log("Se esta usando un carrito");
 		}
 	} catch (error) {
 		console.log("Error: ", error.message);
 	}
-};
+}; */
 
 const addToCart = async (productId) =>{
     try{

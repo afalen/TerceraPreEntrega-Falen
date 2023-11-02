@@ -3,18 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Carrito</title>
 </head>
 <body>
     
-    <div>
-        <h3 class="container h3 text-center bg-info">Los productos del carrito solicitado son:</h3>
-        {{#each products}}
-        <div class="container mt-3 d-flex flex-column align-items-center bg-warning">
-            <p>Producto: {{this.product}} &nbsp; Cantidad: {{this.quantity}}</p>
+    <h3 class="h3 text-center">Los productos del carrito son:</h3>
+    
+
+
+    
+    <div class="d-flex flex-column justify-content-center align-items-center">
+
+        <table class="table table-primary text-center">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Producto</th>
+                    <th>Subtotal</th>
+                    <th>Cantidad</th>
+                    <th> - </th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {{#each products}}
+                <tr>
+                    <td>{{@index}}</td>
+                    <td>
+                    <div class="mt-1" style="height: 100px;">
+                        <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                    </div>
+                    <p> {{this.nombre}}</p>
+                    </td>
+                    <td>{{this.precio}}</td>
+                    <td>{{this.quantity}}</td>
+                    <td> 
+                        <form action="/api/carts/{{this.id_cart}}/products/{{this._id}}?_method=DELETE" method="post">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button class="btn btn-danger">Eliminar</button>
+                        </form>
+                    </td>
+
+                </tr>
+            {{/each}}
+
+            </tbody>
+
+            <tfoot>
+                <tr>
+                    <th>
+                        Total: {{this.total}}
+                    </th>
+                </tr>
+            </tfoot>
+
+        </table>
+        <div class="d-flex">
+            <a href="/products"> <button class="btn btn-primary btn-lg px-5 m-2"> Regresar </button ></a>
+            <form action="/api/carts/{{this._id}}/purchase" method="post">
+                <button class="btn btn-success btn-lg px-5 m-2">Comprar</button>
+            </form>
         </div>
-        <br />
-        {{/each}}
     </div>
 
 </body>

@@ -1,5 +1,6 @@
 import express from 'express';
 import { ViewsController } from '../controllers/views.controllers.js';
+import { checkUserAuthenticatedView, showAuthView } from '../middlewares/auth.js';
 
 const router = express.Router()
 
@@ -7,22 +8,24 @@ const router = express.Router()
 router.get("/", ViewsController.renderHome);
 
 // Ruta que renderiza la vista del login
-router.get("/login", ViewsController.renderLogin)
+router.get("/login", showAuthView, ViewsController.renderLogin)
 
 // Ruta que renderiza la vista del register
-router.get("/register", ViewsController.renderRegister)
+router.get("/register", showAuthView, ViewsController.renderRegister)
 
+// Ruta que renderiza la vista para editar/modificar un producto
+router.get('/products/:uid', checkUserAuthenticatedView, ViewsController.renderEdit)
 
 // Vista de productos
-router.get('/products', ViewsController.getPaginationProducts)
+router.get('/products', checkUserAuthenticatedView, ViewsController.getPaginationProducts)
 
 // Vista de un carrito especificado por su ID
-router.get('/carts/:cid', ViewsController.getCartById)
+router.get('/carts/:cid', checkUserAuthenticatedView, ViewsController.renderCart)
 
 // Sessions
 
 // Vista de profile del usuario
-router.get("/profile", ViewsController.getProductsProfile)
+router.get("/profile", checkUserAuthenticatedView, ViewsController.getProductsProfile)
 
 // Destruir la session
 router.get("/logout", ViewsController.logOut)

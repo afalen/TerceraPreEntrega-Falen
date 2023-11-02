@@ -1,0 +1,24 @@
+
+            <h3 class="text-center"> Modificar un producto </h3>
+            <form action="/api/products/{{this._id}}?_method=PUT" method="post" class="container p-1">
+                <input type="hidden" name="_method" value="PUT">
+                <div class="bg-danger p-3 mt-2 d-flex justify-content-center align-items-center gap-2">
+                    <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" value="{{this.nombre}}" required>
+                        <label for="precio">Precio</label> 
+                        <input type="number" id="precio" name="precio" value="{{this.precio}}" required>
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+                        <label for="stock">Stock</label> 
+                        <input type="number" id="stock" name="stock" value="{{this.stock}}" required>
+                        <label for="categoria">Categoria</label>
+                        <input type="text" id="categoria" name="categoria" value="{{this.categoria}}" required> 
+                    </div>
+                    <div class="d-flex flex-column justify-content-center align-items-center gap-2">
+                        <label for="imagen">Imagen</label>
+                        <input type="text" id="imagen" name="imagen" value="{{this.imagen}}" required>               
+                        <button type="submit" class="btn btn-primary">Modificar</button>
+                    </div>
+                </div>
+            </form>

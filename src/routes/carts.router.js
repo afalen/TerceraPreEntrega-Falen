@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { CartsController } from '../controllers/carts.controllers.js';
+import { checkRoles, checkUserAuthenticatedView  } from '../middlewares/auth.js';
 
 const router = Router()
 
@@ -10,16 +11,18 @@ router.post('/', CartsController.createCart);
 router.get('/:cid', CartsController.getCartById);
 
 // Ruta para agregar productos a un carrito especificado
-router.post('/:cid/product/:pid', CartsController.addProductsInCartById);
+router.post('/:cid/product/:pid', checkUserAuthenticatedView, checkRoles(['user']), CartsController.addProductsInCartById);
 
 // Ruta para eliminar un determinado producto de un carrito
-router.delete('/:cid/products/:pid', CartsController.deleteProductInCart)
+router.delete('/:cid/products/:pid', checkUserAuthenticatedView, checkRoles(['user']),  CartsController.deleteProductInCart)
 
 // Ruta para actualizar/reemplazar los productos de un carrito
 router.put('/:cid', CartsController.modifyProductsInCart)
 
 // Ruta para modificar los ejemplares de un producto determinado en un carrito
 router.put('/:cid/products/:pid', CartsController.modifyQuantityInProductInCart)
+
+router.post("/:cid/purchase", CartsController.purchase);
 
 // Ruta para eliminar todos los productos del carrito especificado
 router.delete('/:cid', CartsController.deleteProductsInCart)

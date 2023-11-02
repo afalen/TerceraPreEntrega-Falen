@@ -3,21 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Productos</title>
 </head>
 <body>
 {{#if isValid}}
-<div>
-    <p class="container h3 text-center bg-info"> Lista de productos </p>
+
+<p class="text-center">Bienvenido {{user.email}}</p>
+<p class="text-center"> Id carrito:{{user.cart}}  </p>
+<div class="container mt-1 d-flex flex-rap align-items-center justify-content-evenly text-center">
+
+        <div>
+            <a href="/carts/{{user.cart}}"> <button class="btn btn-primary">Ver carrito</button> </a>
+        </div>
+
+
+</div>
+
+
+
+<p class="h3 text-center"> Lista de productos </p>
+
+<div class="row justify-content-center gap-1">
     {{#each docs}}
-    <div class="container mt-3 d-flex flex-column align-items-center bg-warning">
-        <p>Nombre: {{this.nombre}} &nbsp; Precio: {{this.precio}}</p>
-        <p>Categoria: {{this.categoria}} &nbsp; Stock: {{this.stock}}</p>
-        <button onclick="addToCart('{{this._id}}')" class="btn btn-primary">Agregar al carrito</button>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-image text-center" style="height: 100px;">
+                <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+            </div>
+                <div class="card-body text-center">  
+                <h5 class="card-title mb-0">{{this.nombre}}</h5>
+                <p class="mb-0"> Precio: {{this.precio}} </p>
+                <p class="mb-0"> Categoria: {{this.categoria}}</p>
+                <p class="mb-0"> Stock: {{this.stock}} </p>
+                <p class="card-text mb-0">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <button onclick="addToCart('{{this._id}}')" class="btn btn-primary">Agregar al carrito</button>
+            </div>
+        </div>
     </div>
-    <br />
     {{/each}}
 </div>
+
+
+
 <br />
 <nav aria-label="Page navigation example">
     <ul class="pagination justify-content-center">

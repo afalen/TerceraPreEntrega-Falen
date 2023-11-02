@@ -5,7 +5,7 @@ export class ProductsService {
         return productsDao.getProducts(limit, page, sort, query);
     }
     
-    static async getProductsById   (id) {
+    static async getProductsById (id) {
         return productsDao.getProductsById(id);
     }
     

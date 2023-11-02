@@ -1,28 +1,73 @@
 
+    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil</title>
+</head>
+<body>
     {{#if isAdmin}}
-        <p class="container h3 text-center bg-info"> Bienvenido  Administrador Coder </p>
+        <p class="container h3 text-center"> Bienvenido Administrador Coder </p>
         
         <div class="container mt-1 pt-1 pb-1 d-flex justify-content-evenly align-items-center gap-2 bg-success">
             <p>Email: {{this.email}}</p>
             <p>Rol: {{this.role}}</p>
             <a href="/logout"> <button class="btn btn-primary"> LogOut </button></a>
+            <a href="/products"> <button class="btn btn-primary">Productos</button> </a>
         </div>
 
-        <div class="container mt-3 bg-warning">
-            {{#each docs}}
-            <div>
-                <p>Nombre: {{this.nombre}} &nbsp; Precio: {{this.precio}}</p>
-                <p>Categoria: {{this.categoria}} &nbsp; Stock: {{this.stock}}</p>
+        <div class="container mt-3 mb-3 bg-warning">
+
+            <form action="/api/products" method="post" class="p-1">
+                <div class="bg-danger p-3 mt-3 d-flex justify-content-center align-items-center gap-2">
+                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-2">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                        <label for="precio">Precio</label> 
+                        <input type="number" id="precio" name="precio" required>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-2">
+                        <label for="stock">Stock</label> 
+                        <input type="number" id="stock" name="stock" required>
+                        <label for="categoria">Categoria</label>
+                        <input type="text" id="categoria" name="categoria" required> 
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center align-items-center gap-2">
+                        <label for="imagen">Imagen</label>
+                        <input type="text" id="imagen" name="imagen" required>               
+                        <button type="submit" class="btn btn-success">Agregar</button>
+                    </div>
+                </div>
+            </form>
+
+            {{#each products}}
+            <div id="list-product" >
+
+                <div id="product" class="d-flex justify-content-center align-items-center gap-3 pt-5">
+                    <div class="mt-1" style="height: 100px;">
+                        <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                    </div>
+                    <p>Nombre: {{this.nombre}} &nbsp; Precio: {{this.precio}}</p>
+                    <p>Categoria: {{this.categoria}} &nbsp; Stock: {{this.stock}}</p>
+                    <form action="/api/products/{{this._id}}?_method=DELETE" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger">Eliminar</button>
+                    </form>
+                    <a href="/products/{{this._id}}"> <button class="btn btn-primary">Modificar</button> </a>
+
+                </div>
+
             </div>
-            <br />
             {{/each}}
         </div>
 
 
 
     {{else}}
-    <p class="container h3 text-center bg-info">Bienvenido {{this.first_name}} {{this.last_name}}</p>
-    <div class="container mt-1 d-flex justify-content-evenly align-items-center gap-2 bg-success">
+    <p class="container h3 text-center">Bienvenido {{this.first_name}} {{this.last_name}}</p>
+    <div class="container mt-1 d-flex justify-content-evenly align-items-center gap-2">
 
         <p> <strong> Email: </strong> {{this.email}} </p>
         <p> <strong> Edad: </strong> {{this.age}} </p>
@@ -30,11 +75,16 @@
         <p> <strong> Id_Cart: </strong> {{this.cart}}</p>
 
         <a href="/logout"> <button class="btn btn-primary"> LogOut </button></a>
+        <a href="/chat"> <button class="btn btn-primary"> Chat </button> </a>
+        <a href="/products"> <button class="btn btn-primary">Productos</button> </a>
     </div>
 
         <div class="container mt-3 bg-warning">
-            {{#each docs}}
-            <div>
+            {{#each products}}
+            <div class="d-flex justify-content-center align-items-center gap-3 pt-5">
+                <div class="mt-1" style="height: 100px;">
+                    <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                </div>
                 <p>Nombre: {{this.nombre}} &nbsp; Precio: {{this.precio}}</p>
                 <p>Categoria: {{this.categoria}} &nbsp; Stock: {{this.stock}}</p>
             </div>
@@ -42,3 +92,7 @@
             {{/each}}
         </div>
     {{/if}}
+    
+
+</body>
+</html>    

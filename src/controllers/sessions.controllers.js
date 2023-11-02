@@ -65,6 +65,7 @@ export class SessionsController {
             return res.json({status:"error", error:"no está logueado"})
         }
         
+        
         let userConected = new UserDto(req.session.user)
 
         res.json({status:"está logueado!", payload: userConected})

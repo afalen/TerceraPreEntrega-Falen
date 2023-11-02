@@ -11,5 +11,7 @@ export const config = {
     callbackUrl: process.env.CALLBACK_URL,
     adminEmail: process.env.ADMIN_EMAIL,
     adminPassword: process.env.ADMIN_PASSWORD,
-    persistence: process.env.PERSISTENCE
+    persistence: process.env.PERSISTENCE,
+    ecommerceEmail: process.env.ECOMMERCE_EMAIL,
+    ecommercePass: process.env.ECOMMERCE_PASSWORD
 }

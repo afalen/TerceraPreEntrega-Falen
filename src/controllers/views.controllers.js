@@ -21,14 +21,23 @@ export class ViewsController{
         }
     }
     
-    
+    static renderEdit = async(req, res)=>{
+        try{
+            const {uid} = req.params
+            const product = await ViewsService.renderProduct(uid)
+            res.render("edit", product)
+        }catch(error){
+            throw new Error(`Error al renderizar el register ${error.message}`);
+        }
+    }
+
     static getPaginationProducts = async(req, res)=>{
         try {
             const limit = parseInt(req.query.limit) || 10
             const page = parseInt(req.query.page) || 1 
     
             const result = await ViewsService.getPaginationProducts(limit, page)
-            //console.log(result)
+            result.user = req.session.user
             res.render('products', result);
         } catch (error) {
             console.error('Error al recuperar productos:', error);
@@ -36,9 +45,9 @@ export class ViewsController{
         }
     }
     
-    static getCartById = async(req,res)=>{
+    static renderCart = async(req,res)=>{
         const {cid} = req.params
-        let cart = await ViewsService.getCartById(cid)
+        let cart = await ViewsService.renderCart(cid)
         res.render('carts', cart)
     }
     
@@ -49,7 +58,7 @@ export class ViewsController{
     
         const { first_name, last_name, email, age, role, cart } = req.session.user
         const result = await ViewsService.getProductsProfile(first_name, last_name, email, age, role, cart)
-    
+
         res.render("profile", result)
     }
     
