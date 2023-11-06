@@ -44,7 +44,7 @@ export class ProductsController {
             res.redirect("/profile")
             //res.send({result: "success", payload: result})
         }catch(error){
-            throw new Error(`Error al agregar el producto ${error.message}`);
+            res.json({ status: "error", message: error.message });
         }
     }
     

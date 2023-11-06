@@ -1,6 +1,7 @@
 import { CartsService } from "../services/carts.services.js";
 import { sendEmailController } from "./emails.controllers.js";
 import { CustomError } from "../services/error/customError.services.js";
+import { generateCartErrorParams } from "../services/error/cartErrorParams.services.js"
 import { EError } from "../enums/EError.js";
 
 export class CartsController {
@@ -16,10 +17,11 @@ export class CartsController {
     static getCartById = async(req, res)=>{
         try{
             const {cid} = req.params
+            console.log(cid)
             if (!cid || cid.trim() === "") {
                 CustomError.createError({
                     name: "Error id carrito",
-                    cause: generateCartErrorParams(id),
+                    cause: generateCartErrorParams(cid),
                     message: "Error al obtener el carrito",
                     errorCode: EError.INVALID_PARAMS,
                 });
@@ -27,7 +29,7 @@ export class CartsController {
             let resultado = await CartsService.getCartById(cid)
             res.send({result: 'success', payload: resultado})
         }catch(error){
-            throw new Error(`Error al visualizar el carrito ${error.message}`);
+            res.json({ status: "error", message: error.message });
         }
     }
     

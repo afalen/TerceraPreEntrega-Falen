@@ -9,6 +9,7 @@ import methodOveride from 'method-override';
 import http from 'http'
 import { Server } from 'socket.io'
 import { chat } from './sockets.js';
+import { errorHandler } from './middlewares/errorHandler.js'
 
 const app = express()
 const server = http.createServer(app)
@@ -27,6 +28,7 @@ import { sessionsRouter } from './routes/sessions.router.js';
 import { userRouter } from './routes/users.router.js';
 import { emailRouter } from './routes/emails.router.js';
 import { chatsRouter } from './routes/chats.router.js';
+import { mockingproductsRouter } from './routes/mockingproducts.router.js';
 
 server.listen(config.port, ()=>{
     console.log(`Server is running on port ${config.port}`)
@@ -69,3 +71,5 @@ app.use('/api/users', userRouter)
 app.use('/chat', chatsRouter)
 app.use('/', viewsRouter)
 app.use('/enviar-email', emailRouter)
+app.use('/mockingproducts', mockingproductsRouter)
+app.use(errorHandler);
