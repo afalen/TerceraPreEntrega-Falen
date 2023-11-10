@@ -2,6 +2,7 @@ import { ProductsService } from '../services/products.services.js'
 import { EError } from '../enums/EError.js'
 import { CustomError } from '../services/error/customError.services.js'
 import { generateProductError } from '../services/error/productError.services.js'
+import { errorLoger } from '../utils/logger.js'
 
 export class ProductsController {
 
@@ -32,6 +33,7 @@ export class ProductsController {
         try{
             let newProduct = req.body;
             if (!newProduct) {
+                errorLoger.error("Error al agregar un producto")
                 CustomError.createError({
                     name: "Error al crear el producto",
                     cause: generateProductError(req.body),

@@ -13,5 +13,6 @@ export const config = {
     adminPassword: process.env.ADMIN_PASSWORD,
     persistence: process.env.PERSISTENCE,
     ecommerceEmail: process.env.ECOMMERCE_EMAIL,
-    ecommercePass: process.env.ECOMMERCE_PASSWORD
+    ecommercePass: process.env.ECOMMERCE_PASSWORD,
+    nodeEnv: process.env.NODE_ENV
 }

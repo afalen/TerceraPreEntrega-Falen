@@ -19,6 +19,7 @@ chat(io)
 // Config
 import { config } from './config/config.js';
 import { initializePassport } from './config/passport.config.js';
+import { typeLogger } from './utils/logger.js';
 
 // Rutas
 import { viewsRouter } from './routes/views.router.js';
@@ -29,6 +30,7 @@ import { userRouter } from './routes/users.router.js';
 import { emailRouter } from './routes/emails.router.js';
 import { chatsRouter } from './routes/chats.router.js';
 import { mockingproductsRouter } from './routes/mockingproducts.router.js';
+import { loggerRouter } from './routes/logger.router.js';
 
 server.listen(config.port, ()=>{
     console.log(`Server is running on port ${config.port}`)
@@ -38,6 +40,7 @@ server.listen(config.port, ()=>{
 // Middlewares
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
+app.use(typeLogger)
 // Este middleware sirve para usar un form con metodo POST Y DELETE
 app.use(methodOveride('_method'))
 
@@ -72,4 +75,6 @@ app.use('/chat', chatsRouter)
 app.use('/', viewsRouter)
 app.use('/enviar-email', emailRouter)
 app.use('/mockingproducts', mockingproductsRouter)
+app.use('/loggerTest', loggerRouter)
+
 app.use(errorHandler);

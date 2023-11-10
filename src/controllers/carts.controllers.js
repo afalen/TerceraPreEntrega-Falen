@@ -3,6 +3,7 @@ import { sendEmailController } from "./emails.controllers.js";
 import { CustomError } from "../services/error/customError.services.js";
 import { generateCartErrorParams } from "../services/error/cartErrorParams.services.js"
 import { EError } from "../enums/EError.js";
+import { errorLoger } from "../utils/logger.js";
 
 export class CartsController {
     static createCart = async(req, res)=>{
@@ -17,8 +18,8 @@ export class CartsController {
     static getCartById = async(req, res)=>{
         try{
             const {cid} = req.params
-            console.log(cid)
             if (!cid || cid.trim() === "") {
+                errorLoger.error("Error al crear un carrito")
                 CustomError.createError({
                     name: "Error id carrito",
                     cause: generateCartErrorParams(cid),
@@ -90,9 +91,7 @@ export class CartsController {
 		try {
 			const { cid } = req.params;
             const { email } = req.session.user
-            //console.log(req.session)
             const result = await CartsService.purchase(cid, email);
-            //console.log(result)
             await CartsService.deleteProductsInCart(cid)
 			await sendEmailController(email, result)
             //res.json({ status: "success", data: cartPurchase });

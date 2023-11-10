@@ -4,7 +4,6 @@ import { config } from '../config/config.js';
 
 export const sendEmailController = async (email, result) => {
 	try {
-		//console.log(result)
 		const emailTemplate = `<div>
 				<h1>Gracias por tu compra!!</h1>
 				<h2>Detalles de tu compra:</h2>
