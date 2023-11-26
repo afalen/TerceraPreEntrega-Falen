@@ -41,8 +41,16 @@ export class ProductsController {
                     errorCode: EError.INVALID_JSON,
                 });
             }
-        
-            await ProductsService.addProduct(newProduct)
+
+            if(req.user.role == "premium"){
+                let newProductOwner = {
+                    ...newProduct,
+                    owner: req.user.email
+                }
+                await ProductsService.addProduct(newProductOwner)
+            }else{
+                await ProductsService.addProduct(newProduct)
+            }
             res.redirect("/profile")
             //res.send({result: "success", payload: result})
         }catch(error){
@@ -53,13 +61,24 @@ export class ProductsController {
     static modifyProduct = async(req, res)=>{
         try{
             let {uid} = req.params
+            const product = await ProductsService.getProductsById(uid)
             let {nombre, categoria, precio, stock, imagen} = req.body
             if(!nombre || !categoria || !precio || !stock || !imagen){
                 res.send({status:'error', error:'Faltan parámetros'})
             }
-        
-            await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen})
-            res.redirect("/profile")
+
+            if(product.owner == req.user.email){
+                await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen})
+                res.redirect("/profile")
+            }else{
+                if(req.user.role == 'premium'){
+                    res.redirect("/denied")
+                }else if(req.user.role == 'admin'){
+                    await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen})
+                    res.redirect("/profile")
+                }
+            }
+
            // res.send({result: 'success', payload: result})
         }catch(error){
             throw new Error(`Error al modificar el producto ${error.message}`);
@@ -69,8 +88,19 @@ export class ProductsController {
     static deleteProduct = async(req, res)=>{
         try{
             let {uid} = req.params
-            await ProductsService.deleteProduct(uid)
-            res.redirect("/profile")
+            const product = await ProductsService.getProductsById(uid)
+
+            if(product.owner == req.user.email){
+                await ProductsService.deleteProduct(uid)
+                res.redirect("/profile")
+            }else{
+                if(req.user.role == 'premium'){
+                    res.redirect("/denied")
+                }else if(req.user.role == 'admin'){
+                    await ProductsService.deleteProduct(uid)
+                    res.redirect("/profile")
+                }
+            }
            // res.send({result: "success", payload: result})
         }catch(error){
             throw new Error(`Error al eliminar el producto ${error.message}`);

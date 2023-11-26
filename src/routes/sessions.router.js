@@ -16,6 +16,16 @@ router.post("/login", passport.authenticate('login',{failureRedirect:'/api/sessi
 // Ruta para cuando se detecta un fallo en el logueo
 router.get('/faillogin', SessionsController.failLogin)
 
+router.get('/forgot', SessionsController.forgot)
+
+router.post('/forgot-password', SessionsController.forgotPassword)
+
+router.get('/reset-password', SessionsController.reset);
+
+router.post('/reset-password', SessionsController.resetPassword) 
+
+router.get('/generate_reset-link', SessionsController.generateLink);
+
 router.get('/github', passport.authenticate('github', {scope: ['user:email']}), async(req,res)=>{})
 
 router.get('/githubcallback', passport.authenticate('github', {failureRedirect: '/login'}), SessionsController.githubCallback)

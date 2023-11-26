@@ -33,8 +33,13 @@ const addToCart = async (productId) =>{
             const resp = await fetch(`http://localhost:8080/api/carts/${cartId}/product/${productId}`, {
                 method: "POST",
             })
-            if(resp) Swal.fire('Agregado al carrito!')
-        }
+            const ress = await resp.json()
+			if(ress.result == 'success'){
+				Swal.fire('Agregado al carrito!')
+			}else{
+				Swal.fire(ress.message)
+			}
+		}
 
     } catch(error){
         console.log(error)

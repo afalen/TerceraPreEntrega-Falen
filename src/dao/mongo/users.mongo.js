@@ -43,6 +43,28 @@ export class User{
 		}
 	}
 
+	static async changeRol(userId){
+		try {
+			const user = await UserModel.findById(userId);
+			if (!user) {
+				throw new Error("El usuario no existe");
+			}
+			
+			if(user.role == "user"){
+				user.role = "premium"
+			}else{
+				user.role = "user"
+			}
+			const newUser = await UserModel.updateOne({_id: userId}, user)
+
+			return newUser;
+
+		} catch (error) {
+			throw error;
+		}
+
+
+	}
 
 }
 

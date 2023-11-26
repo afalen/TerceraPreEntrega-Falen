@@ -11,12 +11,12 @@ router.get('/', ProductsController.getProducts)
 router.get('/:pid', ProductsController.getProductsById);
 
 // Ruta para agregar un nuevo producto
-router.post('/', checkUserAuthenticatedView, checkRoles(['admin']), ProductsController.addProduct)
+router.post('/', checkUserAuthenticatedView, checkRoles(['admin', 'premium']), ProductsController.addProduct)
 
 // Ruta para modificar/actualizar un producto por su ID
-router.put('/:uid', checkUserAuthenticatedView, checkRoles(['admin']), ProductsController.modifyProduct)
+router.put('/:uid', checkUserAuthenticatedView, checkRoles(['admin', 'premium']), ProductsController.modifyProduct)
 
 // Ruta para eliminar un producto por su ID
-router.delete('/:uid', checkUserAuthenticatedView, checkRoles(['admin']), ProductsController.deleteProduct)
+router.delete('/:uid', checkUserAuthenticatedView, checkRoles(['admin', 'premium']), ProductsController.deleteProduct)
 
 export { router as productsRouter }

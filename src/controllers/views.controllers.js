@@ -62,6 +62,15 @@ export class ViewsController{
         res.render("profile", result)
     }
     
+
+    static renderDenied = async(req, res)=>{
+        try{
+            res.render("denied")
+        }catch(error){
+            throw new Error(`Error al renderizar la vista ${error.message}`);
+        }
+    }
+
     static logOut = async (req, res) => {
         req.session.destroy(err =>{
             if(!err) res.redirect("/login")

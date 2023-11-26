@@ -17,7 +17,7 @@ const showAuthView = (req, res, next) => {
 const checkRoles = (urlRoles) => {
 	return (req, res, next) => {
 		if (!urlRoles.includes(req.user.role)) {
-			return res.send("<p>No tienes permisos <a href='/'>Ir al home</a></p>");
+			return res.redirect("/denied");
 		} else {
 			next();
 		}

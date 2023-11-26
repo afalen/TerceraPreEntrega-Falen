@@ -27,6 +27,9 @@ router.get('/carts/:cid', checkUserAuthenticatedView, ViewsController.renderCart
 // Vista de profile del usuario
 router.get("/profile", checkUserAuthenticatedView, ViewsController.getProductsProfile)
 
+// Vista de permisos denegados
+router.get("/denied", ViewsController.renderDenied)
+
 // Destruir la session
 router.get("/logout", ViewsController.logOut)
 

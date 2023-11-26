@@ -26,8 +26,12 @@ export class View{
             result.age = age,
             result.role = role,
             result.cart = cart,
-            result.isAdmin = role === "admin" 
             result.products = products
+            if(role === "admin" || role === "premium"){
+                result.isAdmin = true
+            }else{
+                result.isAdmin = false
+            } 
             //console.log(result)
             return result
         }catch(error){

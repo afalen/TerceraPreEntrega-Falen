@@ -11,10 +11,10 @@ router.post('/', CartsController.createCart);
 router.get('/:cid', CartsController.getCartById);
 
 // Ruta para agregar productos a un carrito especificado
-router.post('/:cid/product/:pid', checkUserAuthenticatedView, checkRoles(['user']), CartsController.addProductsInCartById);
+router.post('/:cid/product/:pid', checkUserAuthenticatedView, checkRoles(['user', 'premium']), CartsController.addProductsInCartById);
 
 // Ruta para eliminar un determinado producto de un carrito
-router.delete('/:cid/products/:pid', checkUserAuthenticatedView, checkRoles(['user']),  CartsController.deleteProductInCart)
+router.delete('/:cid/products/:pid', checkUserAuthenticatedView, checkRoles(['user', 'premium']),  CartsController.deleteProductInCart)
 
 // Ruta para actualizar/reemplazar los productos de un carrito
 router.put('/:cid', CartsController.modifyProductsInCart)

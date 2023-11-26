@@ -11,4 +11,15 @@ export class UserController {
 			res.json({ status: "error", message: error.message });
 		}
 	};
+
+	static async changeRol(req, res){
+		try {
+			const {uid} = req.params
+			const user = await UsersService.changeRol(uid);
+		
+			res.json({ status: "success", data: user });
+		} catch (error) {
+			res.json({ status: "error", message: error.message });
+		}
+	}
 }

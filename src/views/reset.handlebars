@@ -1,0 +1,10 @@
+<div class="container">
+
+        <form action="/api/sessions/reset-password" method="post" class="d-flex flex-column gap-1">
+                <input type="hidden" name="token" value="{{this.token}}">    
+                <label for="password">Nuevo password:</label>
+                <input type="password" id="password" name="password" required>
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Restablecer contraseña</button>
+        </form>
+
+</div>

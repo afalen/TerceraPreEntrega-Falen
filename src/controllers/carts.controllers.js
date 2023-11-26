@@ -1,4 +1,5 @@
 import { CartsService } from "../services/carts.services.js";
+import { ProductsService } from '../services/products.services.js'
 import { sendEmailController } from "./emails.controllers.js";
 import { CustomError } from "../services/error/customError.services.js";
 import { generateCartErrorParams } from "../services/error/cartErrorParams.services.js"
@@ -37,8 +38,13 @@ export class CartsController {
     static addProductsInCartById = async(req, res)=>{
         try{
             const {cid, pid} = req.params
-            let resultado = await CartsService.addProductsInCartById(cid, pid)
-            res.send({result: 'success', payload: resultado}) 
+            let product = await ProductsService.getProductsById(pid)
+            if(product.owner == req.user.email){
+                res.send({result: 'error', message: "No puedes agregar un producto que ha sido creado por usted"}) 
+            }else{
+                let resultado = await CartsService.addProductsInCartById(cid, pid)
+                res.send({result: 'success', payload: resultado}) 
+            }
         }catch(error){
             throw new Error(`Error al visualizar los productos del carrito ${error.message}`);
         }

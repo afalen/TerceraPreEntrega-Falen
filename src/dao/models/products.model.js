@@ -8,7 +8,8 @@ const productSchema = new mongoose.Schema({
     categoria: {type: String, require: true, max: 50},
     precio: {type: Number, require: true, max: 10000},
     stock: {type: Number, require: true, max: 100},
-    imagen: {type: String, require: true, max: 200}
+    imagen: {type: String, require: true, max: 200},
+    owner: {type: String, default: "admin"}
 })
 
 productSchema.plugin(mongoosePaginate)
