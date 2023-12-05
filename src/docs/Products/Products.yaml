@@ -1,0 +1,165 @@
+paths:
+  /api/products/:
+    get:
+      summary: Obtiene todos los productos.
+      tags:
+        - Products
+      responses:
+        "200":
+          description: Los productos fueron obtenidos satisfactoriamente de la base de datos
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo con la base de datos
+    post:
+      summary: Agrega un nuevo producto.
+      tags:
+        - Products
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: El producto fue agregadosatisfactoriamente a la base de datos
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo con la base de datos    
+  /api/products/{pid}:
+    get:
+      summary: Obtiene un solo producto a partir de su ID.
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto que desea obtener.
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: El producto fue obtenido con éxito
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo con la base de datos
+    put:
+      summary: Actualiza un producto a partir de su ID
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto que se desea actualizar
+        schema:
+          $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        "200":
+          description: El producto fue modificado satisfactoriamente de la base de datos
+          content:
+            aplication/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Product'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo con la base de datos        
+    delete:
+      summary: Elimina un producto a partir de su ID
+      tags:
+        - Products
+      parameters:
+      - name: pid
+        in: path
+        required: true
+        description: ID del producto que se desea eliminar
+        schema:
+          $type: String
+      responses:
+        "200":
+          description: El producto fue eliminado satisfactoriamente de la base de datos
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo con la base de datos
+
+components:
+  schemas:
+    Product:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: Id autogenerado de mongo
+        nombre:
+          type: String
+          description: Nombre del producto
+        categoria: 
+          type: String
+          description: Categoria del producto
+        precio:
+          type: Number
+          description: Precio del producto
+        stock:
+          type: Number
+          description: Stock disponible del producto
+        imagen:
+          type: String
+          description: Imagen del producto
+        ower:
+          type: String
+          description: Almacena el email del usuario premium que ha creado el producto o admin si fue creado por el administrador.
+      example:
+        _id: ObjectId("656e349b61dd7a28465e7c22")
+        nombre: Producto1
+        categoria: Celulares
+        precio: 2000
+        stock: 50
+        imagen: producto1.png
+        ower: user@email.com
+  requestBodies:
+    updateProduct:
+      type: object
+      properties:
+        name:
+          type: String
+          description: Nombre del producto
+        categoria: 
+          type: String
+          description: Categoria del producto
+        precio:
+          type: Number
+          description: Precio del producto
+        stock:
+          type: Number
+          description: Stock disponible del producto
+        imagen:
+          type: String
+          description: Imagen del producto
+      example:
+        nombre: ProductoName
+        categoria: Tablets
+        precio: 5000
+        stock: 30
+        imagen: producto1.png      
