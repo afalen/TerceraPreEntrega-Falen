@@ -90,6 +90,16 @@ export class Cart {
         }
     }
 
+    static async deleteCart(id){
+        try{
+            let cart = await cartModel.findById(id)
+            let result = await cartModel.deleteOne({_id: id})
+            return result
+        }catch(error){
+            console.error(error)
+        }
+    }
+
     static async purchase(cid, email) {
 		try {
 			const productsApproved = [];

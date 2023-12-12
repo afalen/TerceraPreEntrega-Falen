@@ -93,6 +93,17 @@ export class CartsController {
         }
     }
 
+    static deleteCart = async(req, res)=>{
+        try{
+            const {cid} = req.params
+            let resultado = await CartsService.deleteCart(cid)
+            res.send({result: 'success', payload: resultado}) 
+        }catch(error){
+            throw new Error(`Error al eliminar los productos del carrito ${error.message}`);
+        }
+    }
+
+
     static purchase = async (req, res) => {
 		try {
 			const { cid } = req.params;

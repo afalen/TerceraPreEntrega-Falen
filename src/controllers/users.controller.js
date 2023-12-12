@@ -12,6 +12,17 @@ export class UserController {
 		}
 	};
 
+	static async getUserByEmail(req, res){
+		try {
+			const email = req.body.email
+			const user = await UsersService.getUserByEmail(email);
+			res.json({ status: "success", data: user });
+		} catch (error) {
+			res.json({ status: "error", message: error.message });
+		}
+	}
+
+
 	static async changeRol(req, res){
 		try {
 			const {uid} = req.params

@@ -27,4 +27,7 @@ router.post("/:cid/purchase", CartsController.purchase);
 // Ruta para eliminar todos los productos del carrito especificado
 router.delete('/:cid', CartsController.deleteProductsInCart)
 
+// Ruta para eliminar un carrito especificado por su ID
+router.delete('/delete/:cid', CartsController.deleteCart)
+
 export { router as cartsRouter }

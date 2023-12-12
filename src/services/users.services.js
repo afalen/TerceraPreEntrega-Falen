@@ -6,6 +6,10 @@ export class UsersService {
 		return usersDao.get();
 	}
 
+	static async getUserByEmail(email){
+		return usersDao.getUser(email)
+	}
+
 	static async changeRol(id){
 		return usersDao.changeRol(id);
 	}

@@ -28,9 +28,10 @@ export class SessionsController {
     static login = async (req, res) => {        
         const { email, password } = req.body;
         if (!email || !password) return res.status(400).render("login", { error: "Valores erroneos" });
-    
+
         const user = await SessionsService.getUser(email)
-    
+
+
         if (!user) {
             if(email === config.adminEmail && password === config.adminPassword){
                 req.session.user = {
@@ -50,7 +51,7 @@ export class SessionsController {
                 cart: user.cart,
                 role: user.role
             };
-    
+            
             res.redirect("/profile"); 
         }
     }

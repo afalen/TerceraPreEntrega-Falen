@@ -1,8 +1,6 @@
 import express from 'express';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
-import swaggerJsdoc from 'swagger-jsdoc';
-import swaggerUiExpress from 'swagger-ui-express';
 import path from 'path';
 import { __dirname } from './utils.js'
 import handlebars from 'express-handlebars';
@@ -12,6 +10,7 @@ import http from 'http'
 import { Server } from 'socket.io'
 import { chat } from './sockets.js';
 import { errorHandler } from './middlewares/errorHandler.js'
+import { serve, setup } from './config/swagger.js';
 
 const app = express()
 const server = http.createServer(app)
@@ -47,19 +46,7 @@ app.use(typeLogger)
 app.use(methodOveride('_method'))
 
 // Configuracion para la documentacion
-const swaggerOptions = {
-    definition:{
-        openapi:'3.0.1',
-        info:{
-            title:"Documentacion del Proyecto Ecommerce",
-            description:"API de los productos disponibles en el ecommerce"
-        }
-    },
-    apis: [`src/docs/Products/Products.yaml`, `src/docs/Carts/Carts.yaml`]
-}
-
-const specs = swaggerJsdoc(swaggerOptions);
-app.use('/apidocs', swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
+app.use('/apidocs', serve, setup)
 
 
 
