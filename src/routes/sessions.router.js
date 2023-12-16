@@ -1,11 +1,12 @@
 import express from 'express';
 import passport from 'passport';
 import { SessionsController } from '../controllers/sessions.controllers.js';
+import { uploadProfile } from '../middlewares/multer.profile.js';
 
 const router = express.Router()
 
 // Ruta para agregar un nuevo usuario
-router.post('/register', passport.authenticate('register',{failureRedirect: '/api/sessions/failregister'}), SessionsController.register);
+router.post('/register', uploadProfile.single('file') , passport.authenticate('register',{failureRedirect: '/api/sessions/failregister'}), SessionsController.register);
 
 // Ruta para cuando se detecta un fallo en el registro
 router.get("/failregister", SessionsController.failRegister)

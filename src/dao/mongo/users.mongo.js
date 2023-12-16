@@ -1,4 +1,5 @@
 import { UserModel } from '../models/user.model.js'
+import path from 'path';
 
 export class User{
 
@@ -13,7 +14,8 @@ export class User{
 
     static async getUser(email){
         try{
-            let user = await UserModel.findOne({ email }, { first_name: 1, last_name: 1, age: 1, password: 1, email: 1, cart: 1, role: 1})
+            let user = await UserModel.findOne({ email }, { first_name: 1, last_name: 1, age: 1, password: 1, email: 1, 
+				cart: 1, role: 1, last_connection: 1, documents: 1, hasImgProfile: 1, ImgProfile: 1})
 			return user
         }catch(error){
             console.error(error)
@@ -28,7 +30,7 @@ export class User{
 			if (!user) {
 				throw new Error("El usuario no existe");
 			}
-			return JSON.parse(JSON.stringify(user));
+			return user;
 		} catch (error) {
 			throw error;
 		}
@@ -51,7 +53,11 @@ export class User{
 			}
 			
 			if(user.role == "user"){
-				user.role = "premium"
+				if(user.documents.length === 3){
+					user.role = "premium"
+				}else{
+					throw new Error("No he terminado de cargar la documentación");
+				}
 			}else{
 				user.role = "user"
 			}
@@ -62,9 +68,34 @@ export class User{
 		} catch (error) {
 			throw error;
 		}
-
-
 	}
+
+	static async updateDocuments(userId, files){
+		try {
+
+			const user = await UserModel.findById(userId)
+			if (!user) {
+				throw new Error("El usuario no existe");
+			}
+			//console.log(files)
+
+			// Actualizar el estado del usuario para indicar que ha subido documentos
+			user.documents = user.documents.concat(files.map(file => ({
+				name: file.originalname,
+				reference: path.join('documents', file.filename),
+			})));
+			
+			const newUser = await UserModel.updateOne({_id: userId}, user)
+			return newUser;
+
+		} catch (error) {
+			throw error;
+		}
+	}
+
+
+
+
 
 }
 

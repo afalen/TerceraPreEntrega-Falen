@@ -7,7 +7,20 @@ const userSchema = new mongoose.Schema({
     age: Number,
     password: String,
     cart: {type: mongoose.Schema.Types.ObjectId, ref:"carts"},
-    role: {type: String, default: "user"}
+    role: {type: String, default: "user"},
+    documents:{
+        type:[
+            {
+                name: String ,
+                reference: String
+            }
+
+        ],
+        default: []
+    },
+    last_connection: { type: Date, default: Date.now },
+    hasImgProfile: {type: Boolean, default: false},
+    ImgProfile: { type: String, default: ""}
 })
 
 userSchema.pre('find', function(){

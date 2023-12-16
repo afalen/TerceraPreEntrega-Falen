@@ -28,7 +28,15 @@
     <div class="col-md-3">
         <div class="card">
             <div class="card-image text-center" style="height: 100px;">
-                <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                {{#if this.hasUrlImg}}
+                    <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                {{else}}
+                    {{#if this.hasImgProducts}}
+                        <img src="/products/{{this.ImgProduct}}" class="h-100" alt="{{this.nombre}}-imagen_del_producto">
+                    {{else}}
+                        <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                    {{/if}}
+                {{/if}}            
             </div>
                 <div class="card-body text-center">  
                 <h5 class="card-title mb-0">{{this.nombre}}</h5>

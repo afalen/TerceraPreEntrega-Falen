@@ -21,27 +21,24 @@ describe('Testing Ecommerce', ()=>{
         })
 
         
-        
         it('El endpoint GET /api/products/:pid trae un producto en específico', async()=>{
             const {
                 statusCode,
                 ok,
                 _body
-            } = await requester.get('/api/products/656e5b4cbd28ae306f1cfce2')
+            } = await requester.get('/api/products/654272656edd69dcb23f0d8d')
             
             expect(statusCode).to.be.equals(200)
             expect(ok).to.be.equals(true)
-            expect(_body.payload._id).to.be.equals('656e5b4cbd28ae306f1cfce2')
-
+            expect(_body.payload._id).to.be.equals('654272656edd69dcb23f0d8d')
         }) 
-
 
         it('El endpoint GET /api/products/:pid trae un producto en específico en formato objeto', async()=>{
             const {
                 statusCode,
                 ok,
                 _body
-            } = await requester.get('/api/products/656e5b4cbd28ae306f1cfce2')
+            } = await requester.get('/api/products/654272656edd69dcb23f0d8d')
             
             expect(statusCode).to.be.equals(200)
             expect(ok).to.be.equals(true)
@@ -130,7 +127,6 @@ describe('Testing Ecommerce', ()=>{
 
     describe('Test de Sessions', ()=>{
         let cookie
-
         it('El endpoint POST /api/sessions/register debe registrar un usuario correctamente con role user', async()=>{
             const userMock = {
                 first_name: "Tito",
@@ -183,4 +179,4 @@ describe('Testing Ecommerce', ()=>{
 
     })
 
-})
+}) 

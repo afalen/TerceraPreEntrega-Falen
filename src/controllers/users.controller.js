@@ -33,4 +33,24 @@ export class UserController {
 			res.json({ status: "error", message: error.message });
 		}
 	}
+
+
+	static async updateDocuments(req, res){
+		try {
+			const {uid} = req.params;
+			// Procesar los archivos cargados
+			const files = req.files;
+			if(!req.files) res.status(400).json({ message: 'Error al subir documentos' });
+
+			const user = await UsersService.updateDocuments(uid, files);
+			
+			res.status(200).json({ message: 'Documentos subidos exitosamente', user });
+		} catch (error) {
+			console.error(error);
+			res.status(500).json({ message: 'Error al subir documentos' });
+		} 
+
+}
+
+
 }

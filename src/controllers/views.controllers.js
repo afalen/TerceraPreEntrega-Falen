@@ -56,8 +56,8 @@ export class ViewsController{
             return res.redirect("/login")
         }
     
-        const { first_name, last_name, email, age, role, cart } = req.session.user
-        const result = await ViewsService.getProductsProfile(first_name, last_name, email, age, role, cart)
+        const { first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile } = req.session.user
+        const result = await ViewsService.getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile)
 
         res.render("profile", result)
     }

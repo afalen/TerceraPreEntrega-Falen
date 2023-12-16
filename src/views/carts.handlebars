@@ -31,7 +31,15 @@
                     <td>{{@index}}</td>
                     <td>
                     <div class="mt-1" style="height: 100px;">
-                        <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                        {{#if this.hasUrlImg}}
+                            <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                        {{else}}
+                            {{#if this.hasImgProducts}}
+                                <img src="/products/{{this.ImgProduct}}" class="h-100" alt="{{this.nombre}}-imagen_del_producto">
+                            {{else}}
+                                <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
+                            {{/if}}
+                        {{/if}}
                     </div>
                     <p> {{this.nombre}}</p>
                     </td>

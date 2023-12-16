@@ -15,7 +15,7 @@ export class View{
         }
     } 
 
-    static async getProductsProfile(first_name, last_name, email, age, role, cart){
+    static async getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile){
         try{
             //const result = await productModel.paginate({}, {lean: true});
             const result = {}
@@ -26,6 +26,8 @@ export class View{
             result.age = age,
             result.role = role,
             result.cart = cart,
+            result.hasImgProfile = hasImgProfile,
+            result.ImgProfile = ImgProfile,
             result.products = products
             if(role === "admin" || role === "premium"){
                 result.isAdmin = true
@@ -56,7 +58,10 @@ export class View{
                     nombre: productData.nombre,
                     precio: productData.precio * cart.products[index].quantity,
                     imagen: productData.imagen,
-                    quantity: cart.products[index].quantity
+                    quantity: cart.products[index].quantity,
+                    hasUrlImg: productData.hasUrlImg,
+                    hasImgProducts: productData.hasImgProducts,
+                    ImgProduct: productData.ImgProduct
                 }
                 totalCompra += newProduct.precio
                 productsRender.push(newProduct)

@@ -12,7 +12,7 @@ export class SessionsController {
         
     static register = async (req, res) => {
         const { first_name, last_name, email, age, password } = req.body;
-    
+
         if (!first_name || !last_name || !email || !age || !password) {
             return res.status(400).send('Faltan datos.');
         }
@@ -20,6 +20,7 @@ export class SessionsController {
         res.redirect('/login');
     }
     
+
     static failRegister = async (req, res) => {
         console.log("Falla en autenticacion del register")
         res.send("Error. Ya hay un usuario registrado con esos datos")
@@ -30,7 +31,7 @@ export class SessionsController {
         if (!email || !password) return res.status(400).render("login", { error: "Valores erroneos" });
 
         const user = await SessionsService.getUser(email)
-
+        //console.log(user)
 
         if (!user) {
             if(email === config.adminEmail && password === config.adminPassword){
@@ -49,9 +50,11 @@ export class SessionsController {
                 email: user.email,
                 age: user.age,
                 cart: user.cart,
-                role: user.role
+                role: user.role,
+                hasImgProfile: user.hasImgProfile,
+                ImgProfile: user.ImgProfile
             };
-            
+            await UserModel.findOneAndUpdate({ email }, { last_connection: new Date() });
             res.redirect("/profile"); 
         }
     }

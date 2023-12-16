@@ -13,4 +13,8 @@ export class UsersService {
 	static async changeRol(id){
 		return usersDao.changeRol(id);
 	}
+
+	static async updateDocuments(id, files){
+		return usersDao.updateDocuments(id, files)
+	}
 }

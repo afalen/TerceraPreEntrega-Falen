@@ -21,13 +21,17 @@ export const initializePassport = () =>{
                 return done(null,false)
             }
             let cartNew = await cartModel.create({})
+            let img = false
+            if(req.file) img = true
             const newUser = {
                 first_name,
                 last_name,
                 email,
                 age,
                 password: createHash(password),
-                cart: cartNew._id
+                cart: cartNew._id,
+                hasImgProfile: img,
+                ImgProfile: (img) ? req.file.filename : ""
             }
             let result = await UserModel.create(newUser)
             return done(null,result)

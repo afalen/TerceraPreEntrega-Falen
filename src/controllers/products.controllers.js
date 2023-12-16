@@ -40,16 +40,24 @@ export class ProductsController {
                     message: "Hubo un error al agregar un producto",
                     errorCode: EError.INVALID_JSON,
                 });
+            }   
+            let img = false
+            if(req.file) img = true;
+            let newProd = {
+                ...newProduct,
+                hasUrlImg: (newProduct.imagen) ? true : false,
+                hasImgProducts: img,
+                ImgProduct: (img) ? req.file.filename : ""
             }
 
             if(req.user.role == "premium"){
                 let newProductOwner = {
-                    ...newProduct,
+                    ...newProd,
                     owner: req.user.email
                 }
                 await ProductsService.addProduct(newProductOwner)
             }else{
-                await ProductsService.addProduct(newProduct)
+                await ProductsService.addProduct(newProd)
             }
             res.redirect("/profile")
             //res.send({result: "success", payload: result})
@@ -63,18 +71,23 @@ export class ProductsController {
             let {uid} = req.params
             const product = await ProductsService.getProductsById(uid)
             let {nombre, categoria, precio, stock, imagen} = req.body
-            if(!nombre || !categoria || !precio || !stock || !imagen){
+            if(!nombre || !categoria || !precio || !stock){
                 res.send({status:'error', error:'Faltan parámetros'})
             }
+            let img = false
+            if(req.file) img = true;
+            let hasUrlImg = (imagen) ? true : false
+            let hasImgProducts = img
+            let ImgProduct = (img) ? req.file.filename : ""
 
             if(product.owner == req.user.email){
-                await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen})
+                await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen, hasUrlImg, hasImgProducts, ImgProduct})
                 res.redirect("/profile")
             }else{
                 if(req.user.role == 'premium'){
                     res.redirect("/denied")
                 }else if(req.user.role == 'admin'){
-                    await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen})
+                    await ProductsService.modifyProduct(uid, {nombre, categoria, precio, stock, imagen, hasUrlImg, hasImgProducts, ImgProduct})
                     res.redirect("/profile")
                 }
             }

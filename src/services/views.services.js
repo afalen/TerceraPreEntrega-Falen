@@ -15,8 +15,8 @@ export class ViewsService {
         return View.renderCart(id)
     }
     
-    static async getProductsProfile (first_name, last_name, email, age, role, cart) {
-        return View.getProductsProfile(first_name, last_name, email, age, role, cart)
+    static async getProductsProfile (first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile) {
+        return View.getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile)
     }
 
 }
