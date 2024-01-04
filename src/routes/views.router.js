@@ -22,6 +22,9 @@ router.get('/products', checkUserAuthenticatedView, ViewsController.getPaginatio
 // Vista de un carrito especificado por su ID
 router.get('/carts/:cid', checkUserAuthenticatedView, ViewsController.renderCart)
 
+// Vista de usuarios
+router.get('/users', ViewsController.getUsers)
+
 // Sessions
 
 // Vista de profile del usuario

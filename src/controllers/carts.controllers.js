@@ -99,7 +99,7 @@ export class CartsController {
             let resultado = await CartsService.deleteCart(cid)
             res.send({result: 'success', payload: resultado}) 
         }catch(error){
-            throw new Error(`Error al eliminar los productos del carrito ${error.message}`);
+            throw new Error(`Error al eliminar el carrito ${error.message}`);
         }
     }
 

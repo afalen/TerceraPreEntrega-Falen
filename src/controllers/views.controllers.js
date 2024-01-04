@@ -1,4 +1,5 @@
 import { ViewsService } from '../services/views.services.js'
+import { UserDto } from '../dao/dto/user.dto.js';
 
 export class ViewsController{
 	static renderHome = (req, res) => {
@@ -58,7 +59,6 @@ export class ViewsController{
     
         const { first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile } = req.session.user
         const result = await ViewsService.getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile)
-
         res.render("profile", result)
     }
     
@@ -76,6 +76,16 @@ export class ViewsController{
             if(!err) res.redirect("/login")
             else res.send({status: 'Logout ERROR', body: err})
         })
+    }
+
+    static getUsers = async(req, res)=>{
+        try {
+			const users = await ViewsService.getUsers();
+            const newUsers = users.map((user) => new UserDto(user));
+            res.render('users', { newUsers })
+		} catch (error) {
+			res.json({ status: "error", message: error.message });
+		}
     }
 
 }

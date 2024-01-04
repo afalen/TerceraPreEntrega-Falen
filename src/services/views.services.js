@@ -19,6 +19,10 @@ export class ViewsService {
         return View.getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile)
     }
 
+
+    static async getUsers (){
+        return View.getUsers()
+    }
 }
 
 

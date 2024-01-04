@@ -2,7 +2,7 @@ const checkUserAuthenticatedView = (req, res, next) => {
 	if (req.user) {
 		next();
 	} else {
-		res.send("<p>Debes estar autenticado <a href='/login'> <button> Ir al login </button> </a></p>");
+		res.render("loginfail")
 	}
 };
 

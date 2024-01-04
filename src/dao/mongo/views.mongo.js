@@ -1,5 +1,6 @@
 import productModel from '../models/products.model.js';
 import cartModel from '../models/carts.model.js';
+import { UserModel } from '../models/user.model.js'
 
 export class View{
     static async getPaginationProducts(limit, page){
@@ -31,6 +32,8 @@ export class View{
             result.products = products
             if(role === "admin" || role === "premium"){
                 result.isAdmin = true
+                if(role === "admin") result.logAdmin = true
+                else result.logAdmin = false
             }else{
                 result.isAdmin = false
             } 
@@ -80,5 +83,17 @@ export class View{
         }
 
     }
+
+    static async getUsers() {
+        try {
+            const user = await UserModel.find().lean(true);
+            return user;
+        } catch (error) {
+            throw new Error("No se pudieron obtener los Usuarios");
+        }
+    }
+
+
+
 }
 

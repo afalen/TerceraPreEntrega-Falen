@@ -45,6 +45,17 @@ export class User{
 		}
 	}
 
+    static async deleteUser(id){
+        try{
+            let result = await UserModel.deleteOne({_id: id})
+            return result
+        }catch(error){
+            console.error(error)
+            return null
+        }
+    }
+
+
 	static async changeRol(userId){
 		try {
 			const user = await UserModel.findById(userId);
@@ -56,7 +67,7 @@ export class User{
 				if(user.documents.length === 3){
 					user.role = "premium"
 				}else{
-					throw new Error("No he terminado de cargar la documentación");
+					throw new Error("No ha terminado de cargar la documentación");
 				}
 			}else{
 				user.role = "user"

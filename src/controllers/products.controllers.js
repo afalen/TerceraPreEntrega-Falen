@@ -3,6 +3,8 @@ import { EError } from '../enums/EError.js'
 import { CustomError } from '../services/error/customError.services.js'
 import { generateProductError } from '../services/error/productError.services.js'
 import { errorLoger } from '../utils/logger.js'
+import { transporter } from '../config/email.config.js';
+import { config } from '../config/config.js';
 
 export class ProductsController {
 
@@ -110,6 +112,16 @@ export class ProductsController {
                 if(req.user.role == 'premium'){
                     res.redirect("/denied")
                 }else if(req.user.role == 'admin'){
+                    if(product.owner !== 'admin'){
+                        const mailOptions = {
+                            from: `Ecommerce Proyect ${config.adminEmail}`,
+                            to: product.owner,
+                            subject: 'Producto eliminado',
+                            text: 'El producto creado por usted ha sido eliminado.'
+                        };
+                        transporter.sendMail(mailOptions)
+                    }
+                    
                     await ProductsService.deleteProduct(uid)
                     res.redirect("/profile")
                 }

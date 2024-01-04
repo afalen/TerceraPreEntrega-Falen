@@ -10,6 +10,10 @@ export class UsersService {
 		return usersDao.getUser(email)
 	}
 
+	static async deleteUser(id){
+		return usersDao.deleteUser(id)
+	}
+
 	static async changeRol(id){
 		return usersDao.changeRol(id);
 	}

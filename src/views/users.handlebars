@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios</title>
+</head>
+<body>
+
+    <div class="d-flex flex-column justify-content-center align-items-center m-3">
+        <p>Boton para eliminar usuarios inactivos por más de 2 días</p>
+        <form action="/api/users?_method=DELETE" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="btn btn-danger">Eliminar usuarios</button>
+        </form>
+
+    </div>
+
+    {{#each newUsers}}
+            <div id="list-users">
+
+                <div id="user" class="d-flex justify-content-center align-items-center gap-3 pt-5">
+
+                    <p>Nombre: {{this.first_name}} &nbsp; Apellido: {{this.last_name}}</p>
+                    <p>Email: {{this.email}} &nbsp; Rol: {{this.role}}</p>
+                    <form action="/api/users/premium/{{this._id}}?_method=PUT" method="post">
+                        <input type="hidden" name="_method" value="PUT">
+                        <button class="btn btn-primary">Cambiar Rol</button>
+                    </form>
+                    <form action="/api/users/{{this._id}}?_method=DELETE" method="post">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button class="btn btn-danger">Eliminar</button>
+                    </form>
+                </div>
+
+            </div>
+    {{/each}}
+
+    
+</body>
+</html>
