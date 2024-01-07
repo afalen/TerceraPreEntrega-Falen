@@ -29,10 +29,8 @@ document.getElementById("username-form").addEventListener("submit", async(e) => 
     }) 
     const user = await result.json()
 
-    console.log(user.payload.email)
+   // console.log(user.payload.email)
         
-
-
     
     socket.emit("newUser", user.payload.email)
 

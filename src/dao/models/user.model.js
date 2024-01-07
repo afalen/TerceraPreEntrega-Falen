@@ -20,7 +20,8 @@ const userSchema = new mongoose.Schema({
     },
     last_connection: { type: Date, default: Date.now },
     hasImgProfile: {type: Boolean, default: false},
-    ImgProfile: { type: String, default: ""}
+    ImgProfile: { type: String, default: ""},
+    isPremium: {type: Boolean, default: false}
 })
 
 userSchema.pre('find', function(){

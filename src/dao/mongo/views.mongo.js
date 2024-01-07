@@ -16,7 +16,7 @@ export class View{
         }
     } 
 
-    static async getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile){
+    static async getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile, documents, isPremium){
         try{
             //const result = await productModel.paginate({}, {lean: true});
             const result = {}
@@ -36,7 +36,7 @@ export class View{
                 else result.logAdmin = false
             }else{
                 result.isAdmin = false
-            } 
+            }
             //console.log(result)
             return result
         }catch(error){

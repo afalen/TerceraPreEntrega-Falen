@@ -32,8 +32,11 @@ export class UserController {
 		try {
 			const {uid} = req.params
 			const user = await UsersService.changeRol(uid);
-		
+			if(req.session.user.rol == 'admin')
 			res.redirect("/users")
+			else 
+				res.redirect('/profile')
+
 		} catch (error) {
 			res.json({ status: "error", message: error.message });
 		}
@@ -48,8 +51,18 @@ export class UserController {
 			if(!req.files) res.status(400).json({ message: 'Error al subir documentos' });
 
 			const user = await UsersService.updateDocuments(uid, files);
-			
-			res.status(200).json({ message: 'Documentos subidos exitosamente', user });
+
+			const userLogued = await UsersService.getUserByEmail(req.session.user.email) 
+			req.session.user = {
+
+				...req.session.user,
+				documents: userLogued.documents,
+				isPremium: userLogued.documents.length === 3 ? true : false
+			} 
+
+
+			//res.status(200).json({ status: 'success', message: 'Documentos subidos exitosamente', user });
+            res.redirect('/premium')
 		} catch (error) {
 			console.error(error);
 			res.status(500).json({ message: 'Error al subir documentos' });
@@ -80,8 +93,7 @@ export class UserController {
 			// Filtrar usuarios inactivos
 			const inactiveUsers = allUsers.filter(user => {
 			const lastConnection = moment(user.last_connection);
-			//const cutoffDate = moment().subtract(2, 'days'); // Cambia a 30 minutos para pruebas
-			const cutoffDate = moment().subtract(3, 'minutes');
+			const cutoffDate = moment().subtract(2, 'days');
 			return lastConnection.isBefore(cutoffDate);
 			});
 		

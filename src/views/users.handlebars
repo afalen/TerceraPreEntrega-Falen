@@ -19,7 +19,7 @@
     {{#each newUsers}}
             <div id="list-users">
 
-                <div id="user" class="d-flex justify-content-center align-items-center gap-3 pt-5">
+                <div id="user" class="d-flex justify-content-center align-items-center gap-3 pt-3 m-3">
 
                     <p>Nombre: {{this.first_name}} &nbsp; Apellido: {{this.last_name}}</p>
                     <p>Email: {{this.email}} &nbsp; Rol: {{this.role}}</p>
@@ -35,7 +35,8 @@
 
             </div>
     {{/each}}
-
-    
+    <div class="d-flex justify-content-center align-items-center">
+        <a href="/profile"> <button class="btn btn-primary btn-lg px-5 m-2"> Regresar </button ></a>
+    </div>
 </body>
 </html>

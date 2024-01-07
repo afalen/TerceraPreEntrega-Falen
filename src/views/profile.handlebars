@@ -11,7 +11,7 @@
     {{#if isAdmin}}
         <p class="container h3 text-center"> Bienvenido</p>
         
-        <div class="container mt-1 pt-1 pb-1 d-flex justify-content-evenly align-items-center gap-2 bg-success">
+        <div class="mt-1 pt-1 pb-1 d-flex justify-content-evenly align-items-center gap-2 bg-success">
             {{#if logAdmin}}
             <p>Email: {{this.email}}</p>
             <p>Rol: {{this.role}}</p>
@@ -78,7 +78,7 @@
             {{#each products}}
             <div id="list-product" >
 
-                <div id="product" class="d-flex justify-content-center align-items-center gap-3 pt-5">
+                <div id="product" class="d-flex justify-content-evenly align-items-center gap-3 pt-5">
                     {{#if this.hasUrlImg}}
                         <div class="mt-1" style="height: 100px;">
                             <img src="{{this.imagen}}" class="h-100" alt="imagen_del_producto">
@@ -136,6 +136,13 @@
         <a href="/chat"> <button class="btn btn-primary"> Chat </button> </a>
         <a href="/products"> <button class="btn btn-primary">Productos</button> </a>
     </div>
+
+    {{#if this.isPremium}}
+    {{else}}
+    <div class="container d-flex justify-content-center align-items-center">
+        <a href="/premium"> <button class="btn btn-primary">Hacete premium</button> </a>
+    </div>
+    {{/if}}
 
         <div class="container mt-3 bg-warning">
             {{#each products}}

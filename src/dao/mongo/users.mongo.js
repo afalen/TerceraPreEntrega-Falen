@@ -15,7 +15,7 @@ export class User{
     static async getUser(email){
         try{
             let user = await UserModel.findOne({ email }, { first_name: 1, last_name: 1, age: 1, password: 1, email: 1, 
-				cart: 1, role: 1, last_connection: 1, documents: 1, hasImgProfile: 1, ImgProfile: 1})
+				cart: 1, role: 1, last_connection: 1, documents: 1, hasImgProfile: 1, ImgProfile: 1, isPremium: 1})
 			return user
         }catch(error){
             console.error(error)
@@ -95,7 +95,8 @@ export class User{
 				name: file.originalname,
 				reference: path.join('documents', file.filename),
 			})));
-			
+			user.isPremium = (user.documents.length === 3) ? true : false
+
 			const newUser = await UserModel.updateOne({_id: userId}, user)
 			return newUser;
 

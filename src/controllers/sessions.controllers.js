@@ -52,7 +52,9 @@ export class SessionsController {
                 cart: user.cart,
                 role: user.role,
                 hasImgProfile: user.hasImgProfile,
-                ImgProfile: user.ImgProfile
+                ImgProfile: user.ImgProfile,
+                documents: user.documents,
+                isPremium: user.isPremium
             };
             await UserModel.findOneAndUpdate({ email }, { last_connection: new Date() });
             res.redirect("/profile"); 

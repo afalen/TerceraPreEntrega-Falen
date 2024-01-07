@@ -1,4 +1,5 @@
 import { ViewsService } from '../services/views.services.js'
+import { UsersService } from '../services/users.services.js';
 import { UserDto } from '../dao/dto/user.dto.js';
 
 export class ViewsController{
@@ -57,8 +58,8 @@ export class ViewsController{
             return res.redirect("/login")
         }
     
-        const { first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile } = req.session.user
-        const result = await ViewsService.getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile)
+        const { first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile, documents, isPremium } = req.session.user
+        const result = await ViewsService.getProductsProfile(first_name, last_name, email, age, role, cart, hasImgProfile, ImgProfile, documents, isPremium)
         res.render("profile", result)
     }
     
@@ -86,6 +87,20 @@ export class ViewsController{
 		} catch (error) {
 			res.json({ status: "error", message: error.message });
 		}
+    }
+
+
+    static renderPremium = async (req, res) => {
+        try{
+            const {email} = req.session.user
+            const user = await UsersService.getUserByEmail(email)
+            const userId = user._id
+            const id = { id: userId.toString() }
+
+            res.render("premium", id)
+        }catch(error){
+            throw new Error(`Error al renderizar la vista para cargar los documentos ${error.message}`);
+        }
     }
 
 }

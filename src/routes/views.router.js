@@ -1,6 +1,6 @@
 import express from 'express';
 import { ViewsController } from '../controllers/views.controllers.js';
-import { checkUserAuthenticatedView, showAuthView } from '../middlewares/auth.js';
+import { checkRoles, checkUserAuthenticatedView, showAuthView } from '../middlewares/auth.js';
 
 const router = express.Router()
 
@@ -14,16 +14,19 @@ router.get("/login", showAuthView, ViewsController.renderLogin)
 router.get("/register", showAuthView, ViewsController.renderRegister)
 
 // Ruta que renderiza la vista para editar/modificar un producto
-router.get('/products/:uid', checkUserAuthenticatedView, ViewsController.renderEdit)
+router.get('/products/:uid', checkUserAuthenticatedView, checkRoles(['admin', 'premium']),ViewsController.renderEdit)
 
 // Vista de productos
 router.get('/products', checkUserAuthenticatedView, ViewsController.getPaginationProducts)
 
 // Vista de un carrito especificado por su ID
-router.get('/carts/:cid', checkUserAuthenticatedView, ViewsController.renderCart)
+router.get('/carts/:cid', checkUserAuthenticatedView, checkRoles(['user', 'premium']), ViewsController.renderCart)
 
 // Vista de usuarios
-router.get('/users', ViewsController.getUsers)
+router.get('/users', checkUserAuthenticatedView, checkRoles(['admin']), ViewsController.getUsers)
+
+// Vista para cargar los documentos necesarios para hacerse premium
+router.get('/premium', checkUserAuthenticatedView, checkRoles(['user']),ViewsController.renderPremium)
 
 // Sessions
 

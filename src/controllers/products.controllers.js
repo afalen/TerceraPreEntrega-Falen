@@ -117,7 +117,7 @@ export class ProductsController {
                             from: `Ecommerce Proyect ${config.adminEmail}`,
                             to: product.owner,
                             subject: 'Producto eliminado',
-                            text: 'El producto creado por usted ha sido eliminado.'
+                            text: 'El producto creado por usted ha sido eliminado por el administrador.'
                         };
                         transporter.sendMail(mailOptions)
                     }

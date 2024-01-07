@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { UserController } from "../controllers/users.controller.js";
+import { UserController } from "../controllers/users.controllers.js";
 import { checkRoles, checkUserAuthenticatedView } from "../middlewares/auth.js";
 import { upload } from "../middlewares/multer.js";
 
@@ -11,7 +11,7 @@ router.get("/", UserController.get);
 // Ruta para obtener un usuario mediante su email
 router.get('/email', UserController.getUserByEmail)
 
-//Ruta para cambiar de roles de 'user' a 'premium'
+//Ruta para cambiar de roles de 'user' a 'premium' o viceversa
 router.put("/premium/:uid", checkUserAuthenticatedView, UserController.changeRol);
 
 // Ruta para cargar los docuementos de un usuario

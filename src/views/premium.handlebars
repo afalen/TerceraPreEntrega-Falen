@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="container d-flex flex-column justify-content-between align-items-center gap-1">
+        <p>PASO 1: Cargar los archivos y dar click en el botón de subir documentos</p>
+
+        <form action="/api/users/{{this.id}}/documents" method="post" enctype="multipart/form-data" class="container d-flex flex-column justify-content-between align-items-center gap-1">
+
+            <label for="documents">Seleciona los archivos para que se pueda cambiar a rol premium (Comprobante de estado de cuenta, Comprobante
+                de domicilio e Identificación)</label>
+            <input type="file" id="documents" name="documents" multiple>
+
+            <button type="submit" class="btn btn-primary btn-lg btn-block px-5 mt-3">Subir documentos</button>
+
+        </form>
+
+        <p>PASO 2: Dar click en el siguiente botón para confirmar</p>
+
+        <form action="/api/users/premium/{{this.id}}?_method=PUT" method="post">
+            <input type="hidden" name="_method" value="PUT">
+            <button class="btn btn-primary btn-lg px-5 m-2"> Confirmar </button >
+        </form>
+
+        <p> PASO 3: Ya sos premium! Recordá volver a loguearte para ver los beneficios!</p>
+        <a href="/profile"> <button class="btn btn-primary btn-lg px-5 m-2"> Regresar </button> </a>
+    </div>
+
+
+</body>
+</html>
+
+
