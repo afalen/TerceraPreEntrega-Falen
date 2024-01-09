@@ -105,7 +105,7 @@ export class SessionsController {
 
 
         // Enviar correo electrónico con el enlace de restablecimiento
-        const resetLink = `http://localhost:8080/api/sessions/reset-password?token=${token}`;
+        const resetLink = `https://tercerapreentrega-falen-production.up.railway.app/api/sessions/reset-password?token=${token}`;
         const mailOptions = {
             from: `Ecommerce Proyect ${config.adminEmail}`,
             to: user.email,
