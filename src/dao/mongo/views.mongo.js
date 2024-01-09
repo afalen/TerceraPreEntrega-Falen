@@ -6,8 +6,8 @@ export class View{
     static async getPaginationProducts(limit, page){
         try{
             const result = await productModel.paginate({}, {limit: limit, page: page, lean: true});
-            result.prevLink = result.hasPrevPage ? `http://localhost:8080/products?page=${result.prevPage}&limit=${result.limit}` : '';
-            result.nextLink = result.hasNextPage ? `http://localhost:8080/products?page=${result.nextPage}&limit=${result.limit}` : '';
+            result.prevLink = result.hasPrevPage ? `https://tercerapreentrega-falen-production.up.railway.app/products?page=${result.prevPage}&limit=${result.limit}` : '';
+            result.nextLink = result.hasNextPage ? `https://tercerapreentrega-falen-production.up.railway.app/products?page=${result.nextPage}&limit=${result.limit}` : '';
             result.isValid = !(page <= 0 || page > result.totalPages)
             return result
         }catch(error){

@@ -24,7 +24,7 @@ document.getElementById("username-form").addEventListener("submit", async(e) => 
     const username = usernameInput.value */
 
 
-    const result = await fetch('http://localhost:8080/api/sessions/current', {
+    const result = await fetch('https://tercerapreentrega-falen-production.up.railway.app/api/sessions/current', {
         method: "GET",
     }) 
     const user = await result.json()
